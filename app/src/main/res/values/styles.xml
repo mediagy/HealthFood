@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -36,5 +36,25 @@
         <item name="android:singleLine">true</item>
         //设置组件宽度为10个字符的宽度
         <item name="android:ems">10</item>
+    </style>
+    <style name="main_RadioButton">
+        //设置组件高度与父组件对齐
+        <item name="android:layout_height">match_parent</item>
+        //设置组件宽度为0dp
+        <item name="android:layout_width">0dp</item>
+        //设置组件权重为1
+        <item name="android:layout_weight">1</item>
+        //设置上边填充的空白区域的高度
+        <item name="android:layout_marginTop">4dp</item>
+        //不显示缺省的按钮图片
+        <item name="android:button">@null</item>
+        //设置图片四周填充5dp的空白
+        <item name="android:drawablePadding">5dp</item>
+        //设置组件相对于父组件水平居中对齐
+        <item name="android:gravity">center_horizontal</item>
+        //设置按钮文字颜色为colors.xml中定义的public_green
+        <item name="android:textColor">@color/public_green</item>
+        //设置文字大小为dimens.xml中定义的Navigation_RadioButtonSize
+        <item name="android:textSize">@dimen/Navigation_RadioButtonSize</item>
     </style>
 </resources>

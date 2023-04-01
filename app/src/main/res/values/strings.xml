@@ -6,4 +6,8 @@
     <string name="forgettips">忘记密码？点击找回</string>
     <string name="nouser">还没有账号？</string>
     <string name="register">注册</string>
+    <string name="main_home">首页</string>
+    <string name="main_community">吃货驾到</string>
+    <string name="main_order">我的订单</string>
+    <string name="main_me">个人中心</string>
 </resources>
