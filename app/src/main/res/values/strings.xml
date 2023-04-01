@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">HealthFood</string>
+    <string name="app_name">良心食品</string>
+    <string name="login_title">登入</string>
+    <string name="username">手机号/邮箱</string>
+    <string name="password">密 码</string>
+    <string name="forgettips">忘记密码？点击找回</string>
+    <string name="nouser">还没有账号？</string>
+    <string name="register">注册</string>
 </resources>

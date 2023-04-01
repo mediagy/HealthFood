@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    //此文件用于设置“用户名”、“密码”编辑框失去焦点后的效果
+    //设置编辑框组件的外框的圆角大小，值为dimens.xml文件中定义的edit_dimens说明的10dp
+    <corners android:radius="@dimen/edit_dimens"/>
+    //设置编辑框组件的内部填充的颜色，值为colors.xml文件中定义的hint_textColor说明的#40ffffff
+    <solid android:color="@color/edit_color"/>
+</shape>

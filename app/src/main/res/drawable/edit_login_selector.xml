@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    //设置获得焦点时显示效果
+    <item android:state_focused="true"
+        android:drawable="@drawable/edit_login_shape_t"/>
+    //设置失去焦点时显示效果
+    <item android:state_focused="false"
+        android:drawable="@drawable/edit_login_shape_f"/>
+</selector>

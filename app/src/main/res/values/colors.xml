@@ -3,4 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="edit_color">#40ffffff</color>//用于设置编辑框中文字的颜色
+    <color name="hint_textColor">#65ffffff</color>//用于设置编辑框中提示文字的颜色
+    <color name="font_color">#ffffff</color>//用于把文字设成白色
 </resources>

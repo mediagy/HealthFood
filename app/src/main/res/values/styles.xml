@@ -7,5 +7,34 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <style name="login_et">
+        //设置组件宽度与父组件对齐
+        <item name="android:layout_width">match_parent</item>
+        //设置组件高度为45dp
+        <item name="android:layout_height">45dp</item>
+        //设置文字颜色为colors.xml文件中定义的font_color
+        <item name="android:textColor">@color/font_color</item>
+        //设置背景显示效果为edit_login_selector中说明的样式
+        <item name="android:background">@drawable/edit_login_selector</item>
+        //设置左边填充的空白区域的宽度
+        <item name="android:layout_marginLeft">30dp</item>
+        //设置右边填充的空白区域的宽度
+        <item name="android:layout_marginRight">30dp</item>
+        //设置上边填充的空白区域的高度
+        <item name="android:layout_marginTop">30dp</item>
+        //设置最多可输入20个字符
+        <item name="android:maxLength">20</item>
+        //设置提示文字颜色为colors.xml中定义的hint_textColor
+        <item name="android:textColorHint">@color/hint_textColor</item>
+        //设置文字大小为dimens.xml中定义的login_textsize
+        <item name="android:textSize">@dimen/login_textsize</item>
+        //设置组件相对于父组件水平居中对齐
+        <item name="android:layout_gravity">center_horizontal</item>
+        //设置图片的四周填充8dp的空白
+        <item name="android:drawablePadding">8dp</item>
+        //设置为单行文本显示
+        <item name="android:singleLine">true</item>
+        //设置组件宽度为10个字符的宽度
+        <item name="android:ems">10</item>
+    </style>
 </resources>
