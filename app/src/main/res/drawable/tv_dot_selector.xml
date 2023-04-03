@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    //设置某图片显示出来时，代表该图片的小圆点应该呈现的样式
+    <item android:drawable="@drawable/dot_true_shape" android:state_selected="true" />
+    //设置某图片未被显示出来时，代表该图片的小圆点应该呈现的样式
+    <item android:drawable="@drawable/dot_false_shape" android:state_selected="false" />
+</selector>
