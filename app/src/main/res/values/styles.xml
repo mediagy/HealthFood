@@ -57,4 +57,14 @@
         //设置文字大小为dimens.xml中定义的Navigation_RadioButtonSize
         <item name="android:textSize">@dimen/Navigation_RadioButtonSize</item>
     </style>
+    <style name="peronal_Liner">
+        //设置背景颜色
+        <item name="android:background">#fff</item>
+        //设置下边填充的空白区域的高度
+        <item name="android:layout_marginBottom">2dp</item>
+        //设置组件内部填充的空白区域的大小
+        <item name="android:padding">5dp</item>
+        //设置组件内部的对齐方式为垂直居中
+        <item name="android:gravity">center_vertical</item>
+    </style>
 </resources>
