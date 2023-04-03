@@ -6,9 +6,14 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,6 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.healthfood.R;
 import com.example.healthfood.adapter.HomeVPAdatper;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Home_frag extends Fragment {
@@ -48,7 +54,13 @@ public class Home_frag extends Fragment {
             }
         }
     };
-
+    //定义GridView组件，对应着布局文件frag_home.xml中的GridView
+    private GridView gridView;
+    //定义一个字符串数组，用来存放首页下方网格中需要显示的图片标题
+    private String[] iconTitles={"新品驾到", "食趣", "食品安全", "产品溯源", "健康养生", "产品展示"};
+    //定义一个整型数组，用来存放首页下方网格中需要显示的图片文件的id
+    private int[] iconIDs={R.drawable.no1, R.drawable.no2, R.drawable.no3,
+            R.drawable.no4, R.drawable.no5, R.drawable.no6};
 
     @Nullable
     @Override
@@ -59,9 +71,57 @@ public class Home_frag extends Fragment {
         //参见MainActivity.java中的语句 transaction.replace(R.id.main_framelayout,new Home_frag());
         View view=inflater.inflate(R.layout.frag_home,null);
         initViewPager(view);//初始化ViewPager
+        initGridView(view);//初始化GridView
         return view;
     }
-
+    //初始化GridView
+    private void initGridView(View view) {
+        //将frag_home.xml文件中id为home_gridView的组件与本文件的gridView进行关联
+        gridView=view.findViewById(R.id.home_gridView);
+        //定义一个列表items，成员类型为HashMap（哈希表，键为字符串类型，值为对象类型）
+        List<HashMap<String,Object>> items=new ArrayList();
+        for (int i = 0; i < iconIDs.length; i++) {
+            HashMap<String,Object> hashMap=new HashMap<>();//新建一个Hashmap对象
+            //在hashMap中放入一个键值对，键为“iconID”，值为数组iconID中的第i+1个值
+            hashMap.put("iconID",iconIDs[i]);
+            //在hashMap中放入一个键值对，键为“title”，值为数组iconTitles中的第i+1个值
+            hashMap.put("title",iconTitles[i]);
+            items.add(hashMap);//在列表items中加入前面创建好的hashMap
+        }
+        //创建一个SimpleAdapter对象
+        SimpleAdapter adapter=new SimpleAdapter(getActivity(),
+                items,//列表items，里面存放着多个哈希表，哈希表中有需要显示的图片及标题
+                R.layout.home_gridview_item,//此为布局文件homg_gridview.xml
+                new String[]{"iconID","title"},//items里成员hashMap中的两个键
+                new int[]{R.id.home_gridView_iv_icon,R.id.home_gridView_tv_title});//布局文件homg_gridview_item.xml中两控件的id
+        gridView.setAdapter(adapter);//为gridView设置适配器为adapter
+        //为gridView设置选项点击监听器
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        Toast.makeText(getActivity(),"新品驾到", Toast.LENGTH_LONG).show();
+                        break;
+                    case 1:
+                        Toast.makeText(getActivity(),"食趣",Toast.LENGTH_LONG).show();
+                        break;
+                    case 2:
+                        Toast.makeText(getActivity(),"食品安全",Toast.LENGTH_LONG).show();
+                        break;
+                    case 3:
+                        Toast.makeText(getActivity(),"产品溯源",Toast.LENGTH_LONG).show();
+                        break;
+                    case 4:
+                        Toast.makeText(getActivity(),"健康养生",Toast.LENGTH_LONG).show();
+                        break;
+                    case 5:
+                        Toast.makeText(getActivity(),"产品展示",Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        });
+    }
     //初始化ViewPager
     private void initViewPager(View view) {
         //将frag_home.xml文件中id为home_viewPager的组件与本文件的viewPager进行关联

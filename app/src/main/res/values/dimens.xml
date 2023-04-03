@@ -3,4 +3,6 @@
     <dimen name="login_textsize">30sp</dimen>//用于设置“登入”字体大小
     <dimen name="edit_dimens">10dp</dimen>//用于设置“用户名”、“密码”编辑框的圆角大小
     <dimen name="Navigation_RadioButtonSize">10sp</dimen>//定义底部导航单选按钮中文字的大小
+    <dimen name="home_gridView_iv_icon_widthHeight">50dp</dimen>//定义主页下方图片网格中图片的宽高
+    <dimen name="home_gridView_tv_title_textSize">13sp</dimen>//定义主页下方图片网格中文字的大小
 </resources>
