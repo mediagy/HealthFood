@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.healthfood.fragment.Community_frag;
 import com.example.healthfood.fragment.Home_frag;
 import com.example.healthfood.fragment.PersonalCenter_frag;
 
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.rb_main_community:
                         mRB2.setTextColor(fontColor_true);
                         mRB2.setCompoundDrawablesWithIntrinsicBounds(null, icon_community_true, null, null);
+                        transaction.replace(R.id.main_framelayout,new Community_frag());
                         Toast.makeText(MainActivity.this, "吃货驾到", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.rb_main_order:
