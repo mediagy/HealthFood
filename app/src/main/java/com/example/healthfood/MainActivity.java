@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.healthfood.fragment.Community_frag;
 import com.example.healthfood.fragment.Home_frag;
+import com.example.healthfood.fragment.Order_frag;
 import com.example.healthfood.fragment.PersonalCenter_frag;
 
 public class MainActivity extends AppCompatActivity {
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.rb_main_order:
                         mRB3.setTextColor(fontColor_true);
                         mRB3.setCompoundDrawablesWithIntrinsicBounds(null, icon_order_true, null, null);
+                        transaction.replace(R.id.main_framelayout,new Order_frag());
                         Toast.makeText(MainActivity.this, "我的订单", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.rb_main_me:
