@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.healthfood.fragment.Home_frag;
 import com.example.healthfood.fragment.PersonalCenter_frag;
 
 public class MainActivity extends AppCompatActivity {
@@ -69,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
         mRB3 = (RadioButton) findViewById(R.id.rb_main_order);
         //找到布局文件中的对应着“个人中心”的单选按钮
         mRB4 = (RadioButton) findViewById(R.id.rb_main_me);
+        //开启一个“碎片”事务
+        FragmentTransaction transaction=fragmentManager.beginTransaction();
+        //用Home_frag这个Fragment（碎片）替换布局文件Activity_main.xml中的main_framelayout
+        transaction.replace(R.id.main_framelayout,new Home_frag());
+        //提交“碎片”事务
+        transaction.commit();
     }
 
     private void navigation() {
@@ -85,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
                         mRB1.setTextColor(fontColor_true);
                         //设置按钮上方的图片为icon_home_true，绿色图片
                         mRB1.setCompoundDrawablesWithIntrinsicBounds(null, icon_home_true, null, null);
+                        //用Home_frag这个Fragment（碎片）替换布局文件Activity_main.xml中的main_framelayout
+                        transaction.replace(R.id.main_framelayout,new Home_frag());
                         //弹窗提示
                         Toast.makeText(MainActivity.this, "首页", Toast.LENGTH_LONG).show();
                         break;
