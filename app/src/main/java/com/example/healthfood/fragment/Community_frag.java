@@ -1,7 +1,9 @@
 package com.example.healthfood.fragment;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -22,6 +24,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.healthfood.R;
 import com.example.healthfood.adapter.CommunityBaseAdapter;
+import com.example.healthfood.dao.DBOpenHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -54,6 +57,7 @@ public class Community_frag extends Fragment {
     private Integer[] counts = {101, 201, 301, 401, 501, 601, 701, 801};//每一项的点赞数
     private List<HashMap> list_hashmap = null;//用于存放多项数据
     CommunityBaseAdapter mAdapter;//适配器对象
+    private DBOpenHelper openHelper;//数据库辅助对象
 
     @Nullable
     @Override
@@ -139,8 +143,8 @@ public class Community_frag extends Fragment {
                 dialog();
                 break;
             case 2:
-                //显示一个弹出框
-                Toast.makeText(getActivity(), "收藏", Toast.LENGTH_LONG).show();
+                //将当前选中的项目收藏进数据库
+                collect(info.position);
                 break;
             case 3:
                 //显示一个弹出框
@@ -154,6 +158,51 @@ public class Community_frag extends Fragment {
         return super.onContextItemSelected(item);
     }
 
+    private byte[] PicToBytes(Drawable drawable) {//将drawable对象转成字节数组，以保存到数据库中
+        //如果drawable为空，则直接返回null
+        if (drawable == null) return null;
+        //将drawable转成BitmapDrawable类型
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+        //从BitmapDrawable转成Bitmap
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        //新建一个字节数组输出流
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        //将bitmap以PNG格式压缩输出到字节数组输出流
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        //返回字节数组输出流中的字节数组
+        return byteArrayOutputStream.toByteArray();
+    }
 
+    public void collect(int select_index) {
+        //新建一个数据库辅助对象
+        openHelper = new DBOpenHelper(this.getActivity(), "collection.db", null, 1);
+        //获得一个可写的数据库
+        SQLiteDatabase mDB = openHelper.getWritableDatabase();
+        //新建一个ContentValues对象
+        ContentValues contentValues = new ContentValues();
 
+        //获取list_hashmap中第select_index+1个元素中的各个键值对，分别将值存入ContentValues对象中
+        contentValues.put("name", list_hashmap.get(select_index).get("username").toString());
+        contentValues.put("comment", list_hashmap.get(select_index).get("content").toString());
+        contentValues.put("date", list_hashmap.get(select_index).get("time").toString());
+
+        //由于图片不能直接存入数据库，就需要将对应的图片资源转换成二进制数字串，再存入
+        //获取list_hashmap中第select_index+1个元素中对应键为"picID"的那个值，该值为图片资源的ID
+        int pidID = (int) list_hashmap.get(select_index).get("picID");
+        //根据图片资源的ID，获取Drawable对象
+        Drawable drawable = this.getResources().getDrawable(pidID, null);
+        //将Drawable对象转变为字节数组
+        byte[] bytes = PicToBytes(drawable);
+        //将字节数组存入contentValues中
+        contentValues.put("image", bytes);
+
+        //将contentValues中存入的数据插入数据库的表“collection”中
+        long i = mDB.insert("collection", null, contentValues);
+        if (i > 0) {//如果插入成功
+            Toast.makeText(this.getActivity(), "亲！已收藏！", Toast.LENGTH_LONG).show();
+        } else {//如果插入失败
+            Toast.makeText(this.getActivity(), "亲！收藏失败！", Toast.LENGTH_LONG).show();
+        }
+        mDB.close();
+    }
 }
