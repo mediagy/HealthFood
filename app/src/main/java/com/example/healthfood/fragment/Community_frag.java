@@ -1,21 +1,34 @@
 package com.example.healthfood.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import com.example.healthfood.R;
 import com.example.healthfood.adapter.CommunityBaseAdapter;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Community_frag extends Fragment {
-
     private int picIDs[] = {R.drawable.p1_gourmet,
             R.drawable.p2_gourmet,
             R.drawable.p3_gourmet,
@@ -55,6 +68,8 @@ public class Community_frag extends Fragment {
         mAdapter = new CommunityBaseAdapter(list_hashmap, this.getActivity());
         //为mlistview设置数据:来自于适配器mAdapter
         mlistview.setAdapter(mAdapter);
+        //为mlistview注册上下文菜单
+        this.registerForContextMenu(mlistview);
         //返回view
         return view;
     }
@@ -76,15 +91,69 @@ public class Community_frag extends Fragment {
         }
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        //增加三个菜单项："微信分享"、"收藏"、"删除"
+        menu.add(0, 1, Menu.NONE, "微信分享");
+        menu.add(0, 2, Menu.NONE, "收藏");
+        menu.add(0, 3, Menu.NONE, "删除");
+        //调用父类的同名方法
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    public void dialog() {
+        //新建一个对话框mDialog
+        AlertDialog.Builder mDialog = new AlertDialog.Builder(getActivity());
+        //设置对话框mDialog的标题
+        mDialog.setTitle("确认");
+        //设置对话框mDialog的图标
+        mDialog.setIcon(android.R.drawable.ic_dialog_alert);
+        //设置对话框mDialog的信息提示
+        mDialog.setMessage("您确认要在微信分享");
+        //设置对话框mDialog的“否定”按钮
+        mDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getActivity(), "您不分享到微信了！", Toast.LENGTH_LONG).show();
+            }
+        });
+        //设置对话框mDialog的“肯定”按钮
+        mDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getActivity(), "微信分享成功", Toast.LENGTH_LONG).show();
+            }
+        });
+        mDialog.show();
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        //获得上下文菜单的信息
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {//判断点击的是上下文菜单中的哪一个
+            case 1:
+                //显示一个弹出框
+                Toast.makeText(getActivity(), "微信分享", Toast.LENGTH_LONG).show();
+                //调用dialog（）方法，显示一个对话框
+                dialog();
+                break;
+            case 2:
+                //显示一个弹出框
+                Toast.makeText(getActivity(), "收藏", Toast.LENGTH_LONG).show();
+                break;
+            case 3:
+                //显示一个弹出框
+                Toast.makeText(getActivity(), "删除", Toast.LENGTH_LONG).show();
+                //从list_hashmap列表中删去第position+1个元素
+                list_hashmap.remove(info.position);
+                //通知适配器：数据已更新，需要重新绘制
+                mAdapter.notifyDataSetChanged();
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+
+
 }
-
-
-
-
-
-
-
-
-
-
-
