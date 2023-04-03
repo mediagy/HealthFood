@@ -1,6 +1,8 @@
 package com.example.healthfood;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -8,6 +10,8 @@ import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.example.healthfood.fragment.PersonalCenter_frag;
 
 public class MainActivity extends AppCompatActivity {
     private RadioGroup mRG;//单选按钮组
@@ -18,11 +22,13 @@ public class MainActivity extends AppCompatActivity {
             icon_order_true, icon_order_false,
             icon_me_true, icon_me_false;//八张按钮图片
     private int fontColor_true, fontColor_false;//两种颜色
+    private FragmentManager fragmentManager;//声明“碎片管理器”变量fragmentManager
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fragmentManager=this.getSupportFragmentManager();//获取碎片管理器
         initView();//将布局文件中的单选按钮组和四个单选按钮与本文件中的mRG，mRB1,mRB2,mRB3,mRB4关联起来
         initData();//找到资源文件中定义的8张图片和设置的文字颜色（选中时为#468500，未选中时为#60000000）
         navigation();//实现“导航”功能
@@ -71,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 setAllColor();//将按钮文本设为灰色
                 setAllImage();//将按钮图片改为灰色图片
+                //开启一个“碎片”事务
+                FragmentTransaction transaction=fragmentManager.beginTransaction();
                 switch (checkedId) {
                     case R.id.rb_main_home:
                         //设置文本颜色为fontColor_true,即绿色
@@ -93,9 +101,12 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.rb_main_me:
                         mRB4.setTextColor(fontColor_true);
                         mRB4.setCompoundDrawablesWithIntrinsicBounds(null, icon_me_true, null, null);
+                        //用PersonalCenter_frag这个Fragment（碎片）替换布局文件Activity_main.xml中的main_framelayout
+                        transaction.replace(R.id.main_framelayout,new PersonalCenter_frag());
                         Toast.makeText(MainActivity.this, "个人中心", Toast.LENGTH_LONG).show();
                         break;
                 }
+                transaction.commit();//提交“碎片”事务
             }
         });
     }
